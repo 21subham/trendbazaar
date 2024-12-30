@@ -1,9 +1,9 @@
 import { TrolleyIcon } from "@sanity/icons";
-import { defineField } from "sanity";
+import { defineField, defineType } from "sanity";
 
-export default {
+export const productType = defineType({
   name: "product",
-  title: "Product",
+  title: "Products",
   type: "document",
   icon: TrolleyIcon,
   fields: [
@@ -11,7 +11,7 @@ export default {
       name: "name",
       title: "Product Name",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "slug",
@@ -21,7 +21,7 @@ export default {
         source: "name",
         maxLength: 96,
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "image",
@@ -34,13 +34,40 @@ export default {
     defineField({
       name: "description",
       title: "description",
-      type: "BlockContent",
+      type: "blockContent",
     }),
     defineField({
       name: "price",
       title: "price",
       type: "number",
-      validation: (Rule: any) => Rule.required().min(0),
+      validation: (Rule) => Rule.required().min(0),
+    }),
+    defineField({
+      name: "categories",
+      title: "Categories",
+      type: "array",
+      of: [{ type: "reference", to: { type: "category" } }],
+      validation: (Rule) => Rule.required().min(0),
+    }),
+    defineField({
+      name: "stock",
+      title: "Stock",
+      type: "number",
+      validation: (Rule) => Rule.required(),
     }),
   ],
-};
+  preview: {
+    select: {
+      title: "name",
+      media: "image",
+      subtitle: "price",
+    },
+    prepare(select) {
+      return {
+        title: select.title,
+        media: select.media,
+        subtitle: `$${select.subtitle}`,
+      };
+    },
+  },
+});
