@@ -1,3 +1,4 @@
+import NewYearBanner from "@/components/NewYearBanner";
 import ProductsView from "@/components/ProductsView";
 import { Button } from "@/components/ui/button";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
