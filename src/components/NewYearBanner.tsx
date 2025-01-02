@@ -1,7 +1,8 @@
+import { COUPON_CODES, CouponCode } from "@/sanity/lib/sales/couponCodes";
 import { getActiveSaleByCouponCode } from "@/sanity/lib/sales/getActiveSaleByCouponCode";
 
 async function NewYearBanner() {
-  const sale = await getActiveSaleByCouponCode("NY2025");
+  const sale = await getActiveSaleByCouponCode(COUPON_CODES.NY2025);
 
   if (!sale?.isActive) {
     return null;
