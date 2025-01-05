@@ -64,7 +64,7 @@ function BasketPage() {
                   )}
                 </div>
                 <div className="min-w-8">
-                  <h2 className="text-lg sm:text-xl font-semibold truncate">
+                  <h2 className="text-lg sm:text-xl font-semibold truncate max-w-[800px]">
                     {item.product.name}
                   </h2>
                   <p className="text-sm sm:text-base">
