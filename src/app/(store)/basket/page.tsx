@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 function BasketPage() {
   const groupedItems = useBasketStore((state) => state.getGroupedItems());
 
+  //for check
+  const items = useBasketStore((state) => state.items);
   const { isSignedIn } = useAuth();
   const { user } = useUser();
   const router = useRouter();
@@ -22,12 +24,36 @@ function BasketPage() {
   // client loader
   useEffect(() => setIsClient(true), []);
 
+  //check check
+  useEffect(() => {
+    groupedItems.map((item) => {
+      const stock: any = item.product.stock;
+      const quantity = item.quantity;
+
+      if (stock < quantity) {
+        console.log(item.product._id);
+      }
+    });
+  }, [groupedItems]);
+
+  // function lauda() {
+  //   console.log("yo grouped item");
+
+  //   groupedItems.map((item) => {
+  //     const stock: any = item.product.stock;
+  //     const quantity = item.quantity;
+
+  //     if (stock < quantity) {
+  //       console.log(item.product._id);
+  //     }
+  //   });
+  // }
+  // lauda();
   if (!isClient) {
     return <Loader />;
   }
 
   //client loader
-
   if (groupedItems.length === 0) {
     return (
       <div className="container mx-auto p-4 flex flex-col items-center justify-center min-h-[50vh]">
@@ -97,7 +123,7 @@ function BasketPage() {
               </div>
               {/* add to basket */}
               <div className="flex items-center ml-4 flex-shrink-0">
-                <AddToBasketButton product={item.product} />
+                <AddToBasketButton product={item.product} disabled={false} />
               </div>
             </div>
           ))}

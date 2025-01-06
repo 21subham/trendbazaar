@@ -1,5 +1,6 @@
 "user server";
 
+import { imageUrl } from "@/lib/imageUrl";
 import stripe from "@/lib/stripe";
 import { BasketItem } from "@/store/store";
 
@@ -44,7 +45,26 @@ export async function createCheckoutSession(
       // node: "payment",
       success_url: `${`https://${process.env.VERCEL_URL}` || process.env.NEXT_PUBLIC_BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`,
       cancel_url: `${`https://${process.env.VERCEL_URL}` || process.env.NEXT_PUBLIC_BASE_URL}/basket`,
+      line_items: items.map((item) => ({
+        price_data: {
+          currency: "usd",
+          unit_amount: Math.round(item.product.price! * 100),
+          product_data: {
+            name: item.product.name || "Unnamed Product",
+            description: `Product ID: ${item.product._id}`,
+            metadata: {
+              id: item.product._id,
+            },
+            images: item.product.image
+              ? [imageUrl(item.product.image).url()]
+              : undefined,
+          },
+        },
+        quantity: item.quantity,
+      })),
     });
+
+    return session.url;
   } catch (error) {
     console.error("Error creating checkout session:", error);
     throw error;
