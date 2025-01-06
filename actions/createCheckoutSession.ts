@@ -1,4 +1,4 @@
-"user server";
+"use server";
 
 import { imageUrl } from "@/lib/imageUrl";
 import stripe from "@/lib/stripe";
