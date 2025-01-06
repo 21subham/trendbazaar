@@ -97,7 +97,7 @@ function BasketPage() {
               </div>
               {/* add to basket */}
               <div className="flex items-center ml-4 flex-shrink-0">
-                <AddToBasketButton product={item.product} disabled />
+                <AddToBasketButton product={item.product} />
               </div>
             </div>
           ))}
