@@ -29,22 +29,6 @@ function BasketPage() {
   // client loader
   useEffect(() => setIsClient(true), []);
 
-  // useEffect(() => {
-  //   items.map((item: BasketItem) => {
-  //     const stock = item.product.stock;
-  //     const name = item.product.name;
-  //     const quantity = item.quantity;
-  //     if (stock) {
-  //       if (stock < quantity) {
-  //         console.log(`${name} is out of stock`);
-  //         setOutOfStock(true);
-  //       } else {
-  //         setOutOfStock(false);
-  //       }
-  //     }
-  //   });
-  // }, [items]);
-
   if (!isClient) {
     return <Loader />;
   }
