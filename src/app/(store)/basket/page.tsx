@@ -24,26 +24,26 @@ function BasketPage() {
 
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [outOfStock, setOutOfStock] = useState(false);
+  // const [outOfStock, setOutOfStock] = useState(false);
 
   // client loader
   useEffect(() => setIsClient(true), []);
 
-  useEffect(() => {
-    items.map((item: BasketItem) => {
-      const stock = item.product.stock;
-      const name = item.product.name;
-      const quantity = item.quantity;
-      if (stock) {
-        if (stock < quantity) {
-          console.log(`${name} is out of stock`);
-          setOutOfStock(true);
-        } else {
-          setOutOfStock(false);
-        }
-      }
-    });
-  }, [items]);
+  // useEffect(() => {
+  //   items.map((item: BasketItem) => {
+  //     const stock = item.product.stock;
+  //     const name = item.product.name;
+  //     const quantity = item.quantity;
+  //     if (stock) {
+  //       if (stock < quantity) {
+  //         console.log(`${name} is out of stock`);
+  //         setOutOfStock(true);
+  //       } else {
+  //         setOutOfStock(false);
+  //       }
+  //     }
+  //   });
+  // }, [items]);
 
   if (!isClient) {
     return <Loader />;
@@ -68,6 +68,7 @@ function BasketPage() {
         orderNumber: crypto.randomUUID(),
         customerName: user?.fullName ?? "Unknown",
         customerEmail: user?.emailAddresses[0].emailAddress ?? "Unknown",
+        mode: "payment",
         clerkUserId: user!.id,
       };
       const checkoutUrl = await createCheckoutSession(groupedItems, metadata);
@@ -122,7 +123,7 @@ function BasketPage() {
               <div className="flex items-center ml-4 flex-shrink-0">
                 <AddToBasketButton
                   product={item.product}
-                  disabled={outOfStock}
+                  disabled={item.quantity >= (item.product.stock ?? 0)}
                 />
               </div>
             </div>

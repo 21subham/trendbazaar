@@ -8,6 +8,7 @@ export type Metadata = {
   orderNumber: string;
   customerName: string;
   customerEmail: string;
+  mode: string;
   clerkUserId: string;
 };
 export type GroupedBasketItem = {
@@ -42,7 +43,7 @@ export async function createCheckoutSession(
       customer_creation: customerId ? undefined : "always",
       customer_email: !customerId ? metadata.customerEmail : undefined,
       allow_promotion_codes: true,
-      // node: "payment",
+      mode: "payment",
       success_url: `${`https://${process.env.VERCEL_URL}` || process.env.NEXT_PUBLIC_BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`,
       cancel_url: `${`https://${process.env.VERCEL_URL}` || process.env.NEXT_PUBLIC_BASE_URL}/basket`,
       line_items: items.map((item) => ({
