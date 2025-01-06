@@ -35,6 +35,16 @@ export async function createCheckoutSession(
     if (customers.data.length > 0) {
       customerId = customers.data[0].id;
     }
+
+    const session = await stripe.checkout.sessions.create({
+      customer: customerId,
+      customer_creation: customerId ? undefined : "always",
+      customer_email: !customerId ? metadata.customerEmail : undefined,
+      allow_promotion_codes: true,
+      // node: "payment",
+      success_url: `${`https://${process.env.VERCEL_URL}` || process.env.NEXT_PUBLIC_BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`,
+      cancel_url: `${`https://${process.env.VERCEL_URL}` || process.env.NEXT_PUBLIC_BASE_URL}/basket`,
+    });
   } catch (error) {
     console.error("Error creating checkout session:", error);
     throw error;
