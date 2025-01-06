@@ -50,6 +50,7 @@ function AddToBasketButton({ product, disabled }: AddToBasketButtonProps) {
             ? "bg-gray-400 cursor-not-allowed"
             : "bg-blue-500 hover:bg-blue-600"
         }`}
+        disabled={disabled}
       >
         <span className="text-xl font-bold text-white">+</span>
       </button>

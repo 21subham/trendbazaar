@@ -3,7 +3,7 @@ import AddToBasketButton from "@/components/AddToBasketButton";
 import Loader from "@/components/Loader";
 import { imageUrl } from "@/lib/imageUrl";
 
-import useBasketStore from "@/store/store";
+import useBasketStore, { BasketItem } from "@/store/store";
 import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -24,35 +24,27 @@ function BasketPage() {
 
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [outOfStock, setOutOfStock] = useState(false);
 
   // client loader
   useEffect(() => setIsClient(true), []);
 
-  //check check
   useEffect(() => {
-    groupedItems.map((item) => {
-      const stock: any = item.product.stock;
+    items.map((item: BasketItem) => {
+      const stock = item.product.stock;
+      const name = item.product.name;
       const quantity = item.quantity;
-
-      if (stock < quantity) {
-        console.log(item.product._id);
+      if (stock) {
+        if (stock < quantity) {
+          console.log(`${name} is out of stock`);
+          setOutOfStock(true);
+        } else {
+          setOutOfStock(false);
+        }
       }
     });
-  }, [groupedItems]);
+  }, [items]);
 
-  // function lauda() {
-  //   console.log("yo grouped item");
-
-  //   groupedItems.map((item) => {
-  //     const stock: any = item.product.stock;
-  //     const quantity = item.quantity;
-
-  //     if (stock < quantity) {
-  //       console.log(item.product._id);
-  //     }
-  //   });
-  // }
-  // lauda();
   if (!isClient) {
     return <Loader />;
   }
@@ -126,8 +118,12 @@ function BasketPage() {
                 </div>
               </div>
               {/* add to basket */}
+
               <div className="flex items-center ml-4 flex-shrink-0">
-                <AddToBasketButton product={item.product} disabled={false} />
+                <AddToBasketButton
+                  product={item.product}
+                  disabled={outOfStock}
+                />
               </div>
             </div>
           ))}

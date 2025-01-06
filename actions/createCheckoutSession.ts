@@ -64,6 +64,8 @@ export async function createCheckoutSession(
       })),
     });
 
+    console.log(session.url);
+
     return session.url;
   } catch (error) {
     console.error("Error creating checkout session:", error);
