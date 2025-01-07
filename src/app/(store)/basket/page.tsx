@@ -154,6 +154,6 @@ function BasketPage() {
       </div>
     </div>
   );
-}
+} 
 
 export default BasketPage;
