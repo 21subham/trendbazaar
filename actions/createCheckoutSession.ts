@@ -45,13 +45,12 @@ export async function createCheckoutSession(
 
     const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`;
     const cancelUrl = `${baseUrl}/basket`;
-    console.log("successUrl", successUrl);
-    console.log("cancelUrl", cancelUrl);
 
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_creation: customerId ? undefined : "always",
       customer_email: !customerId ? metadata.customerEmail : undefined,
+      metadata,
       allow_promotion_codes: true,
       mode: "payment",
       success_url: successUrl,
@@ -74,8 +73,6 @@ export async function createCheckoutSession(
         quantity: item.quantity,
       })),
     });
-
-    console.log(session.url);
 
     return session.url;
   } catch (error) {
