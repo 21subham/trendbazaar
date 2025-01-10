@@ -1,4 +1,4 @@
-import { COUPON_CODES, CouponCode } from "@/sanity/lib/sales/couponCodes";
+import { COUPON_CODES } from "@/sanity/lib/sales/couponCodes";
 import { getActiveSaleByCouponCode } from "@/sanity/lib/sales/getActiveSaleByCouponCode";
 
 async function NewYearBanner() {

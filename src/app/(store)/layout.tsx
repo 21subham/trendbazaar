@@ -31,7 +31,9 @@ export default async function RootLayout({
   return (
     <ClerkProvider dynamic>
       <html lang="en">
-        <body>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
           {(await draftMode()).isEnabled && (
             <>
               <DisableDraftModeButton />

@@ -21,6 +21,7 @@ function Header() {
   const createClerkPasskey = async () => {
     try {
       const response = await user?.createPasskey();
+      console.log(response);
     } catch (error) {
       console.log("passkey error", error);
     }
