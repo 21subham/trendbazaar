@@ -1,6 +1,14 @@
-import React from "react";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
-function Orders() {
+async function Orders() {
+  const { userId } = await auth();
+
+  if (!userId) {
+    return redirect("/");
+  }
+
+  const orders = getMyOrders(userId);
   return <div></div>;
 }
 
