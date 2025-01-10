@@ -1,5 +1,4 @@
 import AddToBasketButton from "@/components/AddToBasketButton";
-
 import { imageUrl } from "@/lib/imageUrl";
 import { getProductBySlug } from "@/sanity/lib/products/getProductBySlug";
 import { PortableText } from "next-sanity";
