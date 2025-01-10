@@ -4,6 +4,8 @@ import "../globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header";
 import { SanityLive } from "@/sanity/lib/live";
+import { VisualEditing } from "next-sanity";
+import { draftMode } from "next/headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
