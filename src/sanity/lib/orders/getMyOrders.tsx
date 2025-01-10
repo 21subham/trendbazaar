@@ -6,14 +6,14 @@ export async function getMyOrders(userId: string) {
     throw new Error("userId is required");
   }
   const MY_ORDERS_QUERY = defineQuery(`
-    *[_type == "order" && clerkUserId == $userId] | order(orderDate desc){
-    ...,
-    product[]{
-    ...,
-    product->
+    *[_type=="order" && clerkUserId == $userId]
+    | order(orderDate desc)
+    {
+    ..., products[]
+    {
+    ...,product->
     }
-    }
-    `);
+    }`);
 
   try {
     const orders = await sanityFetch({

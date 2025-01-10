@@ -1,7 +1,9 @@
+import { formatCurrency } from "@/lib/formatCurrency";
 import { getMyOrders } from "@/sanity/lib/orders/getMyOrders";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-
+import { imageUrl } from "@/lib/imageUrl";
+import Image from "next/image";
 async function Orders() {
   const { userId } = await auth();
 
@@ -70,16 +72,16 @@ async function Orders() {
                     </div>
                   </div>
 
-                  {order.amountDiscounted ? (
+                  {order.amountDiscount ? (
                     <div className="mt-4 p-3 sm:p-4 bg-red-50 rounded-lg">
                       <p className="text-red-600 font-medium mb-1 text-sm sm:text-base">
                         Discount Applied: &nbsp;
-                        {formatCurrency(order.amountDiscounted, order.currency)}
+                        {formatCurrency(order.amountDiscount, order.currency)}
                       </p>
                       <p className="text-sm text-gray-600">
                         Original Subtotal: &nbsp;
                         {formatCurrency(
-                          (order.totalPrice ?? 0) + order.amountDiscounted,
+                          (order.totalPrice ?? 0) + order.amountDiscount,
                           order.currency
                         )}
                       </p>
